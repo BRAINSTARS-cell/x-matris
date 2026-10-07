@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X-MATRIX</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: #020403;
+    color: #00ff88;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+#matrix {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(0, 255, 136, 0.08),
+        rgba(0, 0, 0, 0.92)
+    );
+    z-index: -1;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: auto;
+    padding: 30px 0 60px;
+}
+
+header {
+    text-align: center;
+    padding: 30px 10px;
+}
+
+.logo {
+    font-size: clamp(42px, 10vw, 90px);
+    font-weight: 900;
+    letter-spacing: 10px;
+    text-shadow:
+        0 0 10px #00ff88,
+        0 0 30px #00ff88,
+        0 0 60px #00ff88;
+    animation: pulse 2s infinite alternate;
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: #8affc7;
+    letter-spacing: 4px;
+}
+
+.clock {
+    margin: 20px auto;
+    padding: 15px 25px;
+    width: fit-content;
+    border: 1px solid #00ff88;
+    border-radius: 12px;
+    background: rgba(0, 255, 136, 0.05);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.25);
+    font-size: 22px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 24px;
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    border-radius: 20px;
+    background: rgba(0, 15, 8, 0.78);
+    backdrop-filter: blur(8px);
+    box-shadow:
+        0 0 20px rgba(0, 255, 136, 0.08),
+        inset 0 0 20px rgba(0, 255, 136, 0.03);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #00ff88;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.25);
+}
+
+.card h2 {
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.result {
+    min-height: 55px;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 10px;
+    background: #000;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    word-break: break-word;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #00ff88;
+    border-radius: 12px;
+    background: rgba(0, 255, 136, 0.08);
+    color: #00ff88;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #00ff88;
+    color: #001a0d;
+    box-shadow: 0 0 20px #00ff88;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+.reaction {
+    height: 160px;
+    border-radius: 15px;
+    background: #180000;
+    border: 2px solid #ff3333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0;
+    transition: 0.2s;
+}
+
+.reaction.ready {
+    background: #001a0d;
+    border-color: #00ff88;
+    color: #00ff88;
+}
+
+.reaction.go {
+    background: #ffffff;
+    color: #000;
+    border-color: #ffffff;
+}
+
+footer {
+    text-align: center;
+    margin-top: 45px;
+    color: #4b8c6c;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.75;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 94%;
+    }
+
+    .logo {
+        letter-spacing: 5px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="overlay"></div>
+
+<div class="container">
+
+<header>
+    <div class="logo">X-MATRIX</div>
+    <div class="subtitle">RANDOM DIGITAL COMMAND CENTER</div>
+    <div class="clock" id="clock">00:00:00</div>
+</header>
+
+<section class="grid">
+
+    <div class="card">
+        <h2>🔐 Password Generator</h2>
+        <div class="result" id="password">Click generate</div>
+        <button onclick="generatePassword()">GENERATE PASSWORD</button>
+    </div>
+
+    <div class="card">
+        <h2>🎲 Random Number</h2>
+        <div class="result" id="number">---</div>
+        <button onclick="randomNumber()">GENERATE NUMBER</button>
+    </div>
+
+    <div class="card">
+        <h2>🎨 Random Color</h2>
+        <div class="result" id="color">---</div>
+        <button onclick="randomColor()">GENERATE COLOR</button>
+    </div>
+
+    <div class="card">
+        <h2>🧠 Reaction Test</h2>
+
+        <div
+            class="reaction"
+            id="reaction"
+            onclick="reactionClick()">
+            PRESS START
+        </div>
+
+        <button onclick="startReaction()">START TEST</button>
+    </div>
+
+</section>
+
+<footer>
+    X-MATRIX • Experimental Digital Lab
+</footer>
+
+</div>
+
+<script>
+
+/* =========================
+   MATRIX BACKGROUND
+========================= */
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+const characters =
+    "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@";
+
+let fontSize = 15;
+let columns = Math.floor(window.innerWidth / fontSize);
+let drops = Array(columns).fill(1);
+
+function drawMatrix() {
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff88";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+
+        const char =
+            characters[Math.floor(Math.random() * characters.length)];
+
+        ctx.fillText(
+            char,
+            i * fontSize,
+            drops[i] * fontSize
+        );
+
+        if (
+            drops[i] * fontSize > canvas.height &&
+            Math.random() > 0.975
+        ) {
+            drops[i] = 0;
+        }
+
+        drops[i]++;
+    }
+}
+
+setInterval(drawMatrix, 40);
+
+
+/* =========================
+   CLOCK
+========================= */
+
+function updateClock() {
+
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+        now.toLocaleTimeString();
+
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+
+/* =========================
+   PASSWORD GENERATOR
+========================= */
+
+function generatePassword() {
+
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        "abcdefghijklmnopqrstuvwxyz" +
+        "0123456789" +
+        "!@#$%^&*()_+-=[]{}";
+
+    let password = "";
+
+    for (let i = 0; i < 16; i++) {
+
+        password +=
+            chars[Math.floor(Math.random() * chars.length)];
+
+    }
+
+    document.getElementById("password").textContent =
+        password;
+}
+
+
+/* =========================
+   RANDOM NUMBER
+========================= */
+
+function randomNumber() {
+
+    const number =
+        Math.floor(Math.random() * 1000000);
+
+    document.getElementById("number").textContent =
+        number.toLocaleString();
+
+}
+
+
+/* =========================
+   RANDOM COLOR
+========================= */
+
+function randomColor() {
+
+    const letters = "0123456789ABCDEF";
+
+    let color = "#";
+
+    for (let i = 0; i < 6; i++) {
+
+        color +=
+            letters[Math.floor(Math.random() * 16)];
+
+    }
+
+    document.getElementById("color").textContent =
+        color;
+
+    document.getElementById("color").style.color =
+        color;
+
+}
+
+
+/* =========================
+   REACTION GAME
+========================= */
+
+let reactionState = "idle";
+let reactionStart = 0;
+let reactionTimer;
+
+function startReaction() {
+
+    const box =
+        document.getElementById("reaction");
+
+    clearTimeout(reactionTimer);
+
+    reactionState = "waiting";
+
+    box.className = "reaction";
+    box.textContent = "WAIT...";
+
+    const delay =
+        1500 + Math.random() * 4000;
+
+    reactionTimer = setTimeout(() => {
+
+        reactionState = "go";
+        reactionStart = performance.now();
+
+        box.className = "reaction go";
+        box.textContent = "CLICK NOW!";
+
+    }, delay);
+}
+
+function reactionClick() {
+
+    const box =
+        document.getElementById("reaction");
+
+    if (reactionState === "idle") {
+
+        box.textContent =
+            "Press START first.";
+
+        return;
+    }
+
+    if (reactionState === "waiting") {
+
+        clearTimeout(reactionTimer);
+
+        reactionState = "idle";
+
+        box.className = "reaction";
+        box.textContent =
+            "TOO EARLY!";
+
+        return;
+    }
+
+    if (reactionState === "go") {
+
+        const time =
+            Math.round(
+                performance.now() - reactionStart
+            );
+
+        reactionState = "idle";
+
+        box.className = "reaction ready";
+
+        box.textContent =
+            time + " ms";
+
+    }
+}
+
+</script>
+
+</body>
+</html>
