@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>X-MATRIX</title>
+<title>X-MATRIX | Digital Toolbox</title>
 
 <style>
 * {
@@ -13,10 +13,10 @@
 }
 
 body {
+    background: #020504;
+    color: #fff;
+    font-family: Arial, sans-serif;
     min-height: 100vh;
-    background: #020403;
-    color: #00ff88;
-    font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
 }
 
@@ -29,173 +29,234 @@ body {
 .overlay {
     position: fixed;
     inset: 0;
-    background: radial-gradient(
-        circle at center,
-        rgba(0, 255, 136, 0.08),
-        rgba(0, 0, 0, 0.92)
-    );
+    background: rgba(0, 8, 4, .72);
     z-index: -1;
 }
 
 .container {
-    width: min(1100px, 92%);
+    width: 94%;
+    max-width: 1100px;
     margin: auto;
-    padding: 30px 0 60px;
+    padding: 25px 0 60px;
 }
 
 header {
     text-align: center;
-    padding: 30px 10px;
+    padding: 25px 0 30px;
 }
 
 .logo {
-    font-size: clamp(42px, 10vw, 90px);
+    font-size: clamp(45px, 12vw, 90px);
     font-weight: 900;
-    letter-spacing: 10px;
+    letter-spacing: 7px;
+    color: #00ff88;
     text-shadow:
         0 0 10px #00ff88,
         0 0 30px #00ff88,
-        0 0 60px #00ff88;
-    animation: pulse 2s infinite alternate;
+        0 0 70px #00ff88;
 }
 
-.subtitle {
-    margin-top: 8px;
+.tagline {
     color: #8affc7;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
+    margin-top: 5px;
 }
 
 .clock {
-    margin: 20px auto;
-    padding: 15px 25px;
-    width: fit-content;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 28px;
     border: 1px solid #00ff88;
-    border-radius: 12px;
-    background: rgba(0, 255, 136, 0.05);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.25);
-    font-size: 22px;
+    border-radius: 15px;
+    color: #00ff88;
+    font-size: 25px;
+    box-shadow: 0 0 20px #00ff8833;
 }
 
-.grid {
+.dashboard {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
-.card {
-    padding: 24px;
-    border: 1px solid rgba(0, 255, 136, 0.4);
-    border-radius: 20px;
-    background: rgba(0, 15, 8, 0.78);
-    backdrop-filter: blur(8px);
-    box-shadow:
-        0 0 20px rgba(0, 255, 136, 0.08),
-        inset 0 0 20px rgba(0, 255, 136, 0.03);
-    transition: 0.3s;
+.nav-btn {
+    padding: 17px 10px;
+    border: 1px solid #00ff88;
+    border-radius: 15px;
+    background: #001b0d;
+    color: #00ff88;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    border-color: #00ff88;
-    box-shadow: 0 0 30px rgba(0, 255, 136, 0.25);
+.nav-btn:hover,
+.nav-btn.active {
+    background: #00ff88;
+    color: #001b0d;
+    box-shadow: 0 0 20px #00ff88;
 }
 
-.card h2 {
-    margin-bottom: 12px;
-    color: #ffffff;
+.tool {
+    display: none;
+    background: rgba(0, 20, 10, .88);
+    border: 1px solid #00ff8866;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 0 30px #00ff8815;
+    margin-bottom: 20px;
 }
 
-.result {
-    min-height: 55px;
-    margin: 15px 0;
-    padding: 15px;
-    border-radius: 10px;
+.tool.active {
+    display: block;
+}
+
+.tool h2 {
+    color: #00ff88;
+    margin-bottom: 18px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
     background: #000;
-    border: 1px solid rgba(0, 255, 136, 0.3);
-    word-break: break-word;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    color: #00ff88;
+    border: 1px solid #00ff8866;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    outline: none;
+}
+
+textarea {
+    min-height: 230px;
+    resize: vertical;
 }
 
 button {
-    width: 100%;
-    padding: 14px;
     border: 1px solid #00ff88;
-    border-radius: 12px;
-    background: rgba(0, 255, 136, 0.08);
+    background: #001b0d;
     color: #00ff88;
-    font-size: 16px;
+    border-radius: 12px;
+    padding: 13px 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
+    transition: .2s;
 }
 
 button:hover {
     background: #00ff88;
-    color: #001a0d;
-    box-shadow: 0 0 20px #00ff88;
+    color: #001b0d;
+    box-shadow: 0 0 18px #00ff88;
 }
 
 button:active {
-    transform: scale(0.96);
+    transform: scale(.96);
 }
 
-.reaction {
-    height: 160px;
-    border-radius: 15px;
-    background: #180000;
-    border: 2px solid #ff3333;
+.row {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.row button {
+    flex: 1;
+    min-width: 120px;
+}
+
+.output {
     margin: 15px 0;
-    transition: 0.2s;
-}
-
-.reaction.ready {
-    background: #001a0d;
-    border-color: #00ff88;
+    padding: 17px;
+    background: #000;
+    border: 1px solid #00ff8844;
+    border-radius: 12px;
     color: #00ff88;
+    text-align: center;
+    word-break: break-word;
 }
 
-.reaction.go {
-    background: #ffffff;
-    color: #000;
-    border-color: #ffffff;
+.calc-display {
+    font-size: 30px;
+    text-align: right;
+    margin-bottom: 12px;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.calc-grid button {
+    min-height: 58px;
+    font-size: 18px;
+}
+
+.calc-grid .wide {
+    grid-column: span 2;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.stat {
+    background: #000;
+    border: 1px solid #00ff8833;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    color: #00ff88;
+    font-size: 20px;
+}
+
+.timer {
+    font-size: 60px;
+    text-align: center;
+    color: #00ff88;
+    padding: 25px;
+    text-shadow: 0 0 20px #00ff88;
+}
+
+.color-box {
+    height: 150px;
+    border-radius: 18px;
+    margin: 15px 0;
+    border: 1px solid #fff4;
 }
 
 footer {
     text-align: center;
-    margin-top: 45px;
-    color: #4b8c6c;
+    color: #4c8c6b;
+    margin-top: 35px;
 }
 
-@keyframes pulse {
-    from {
-        opacity: 0.75;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@media (max-width: 600px) {
+@media(max-width:600px) {
     .container {
         width: 94%;
     }
 
-    .logo {
-        letter-spacing: 5px;
+    .calc-grid button {
+        min-height: 52px;
     }
 
-    .card {
-        padding: 18px;
+    .timer {
+        font-size: 45px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -210,50 +271,242 @@ footer {
 
 <header>
     <div class="logo">X-MATRIX</div>
-    <div class="subtitle">RANDOM DIGITAL COMMAND CENTER</div>
+    <div class="tagline">DIGITAL TOOLBOX</div>
     <div class="clock" id="clock">00:00:00</div>
 </header>
 
-<section class="grid">
+<!-- DASHBOARD -->
 
-    <div class="card">
-        <h2>🔐 Password Generator</h2>
-        <div class="result" id="password">Click generate</div>
-        <button onclick="generatePassword()">GENERATE PASSWORD</button>
-    </div>
+<div class="dashboard">
 
-    <div class="card">
-        <h2>🎲 Random Number</h2>
-        <div class="result" id="number">---</div>
-        <button onclick="randomNumber()">GENERATE NUMBER</button>
-    </div>
+    <button class="nav-btn active" onclick="showTool('calculator', this)">
+        🧮 Calculator
+    </button>
 
-    <div class="card">
-        <h2>🎨 Random Color</h2>
-        <div class="result" id="color">---</div>
-        <button onclick="randomColor()">GENERATE COLOR</button>
-    </div>
+    <button class="nav-btn" onclick="showTool('notes', this)">
+        📝 Notes
+    </button>
 
-    <div class="card">
-        <h2>🧠 Reaction Test</h2>
+    <button class="nav-btn" onclick="showTool('password', this)">
+        🔐 Password
+    </button>
 
-        <div
-            class="reaction"
-            id="reaction"
-            onclick="reactionClick()">
-            PRESS START
-        </div>
+    <button class="nav-btn" onclick="showTool('text', this)">
+        🔤 Text Tools
+    </button>
 
-        <button onclick="startReaction()">START TEST</button>
+    <button class="nav-btn" onclick="showTool('color', this)">
+        🎨 Colors
+    </button>
+
+    <button class="nav-btn" onclick="showTool('timer', this)">
+        ⏱ Timer
+    </button>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<section class="tool active" id="calculator">
+
+    <h2>🧮 Calculator</h2>
+
+    <input
+        id="calcDisplay"
+        class="calc-display"
+        value="0"
+        readonly
+    >
+
+    <div class="calc-grid">
+
+        <button onclick="clearCalc()">AC</button>
+        <button onclick="backspace()">⌫</button>
+        <button onclick="calcInput('%')">%</button>
+        <button onclick="calcInput('/')">÷</button>
+
+        <button onclick="calcInput('7')">7</button>
+        <button onclick="calcInput('8')">8</button>
+        <button onclick="calcInput('9')">9</button>
+        <button onclick="calcInput('*')">×</button>
+
+        <button onclick="calcInput('4')">4</button>
+        <button onclick="calcInput('5')">5</button>
+        <button onclick="calcInput('6')">6</button>
+        <button onclick="calcInput('-')">−</button>
+
+        <button onclick="calcInput('1')">1</button>
+        <button onclick="calcInput('2')">2</button>
+        <button onclick="calcInput('3')">3</button>
+        <button onclick="calcInput('+')">+</button>
+
+        <button class="wide" onclick="calcInput('0')">0</button>
+        <button onclick="calcInput('.')">.</button>
+        <button onclick="calculate()">=</button>
+
     </div>
 
 </section>
 
+
+<!-- NOTES -->
+
+<section class="tool" id="notes">
+
+    <h2>📝 Notes Pad</h2>
+
+    <textarea
+        id="notesArea"
+        placeholder="Write your notes here..."
+    ></textarea>
+
+    <div class="row">
+        <button onclick="saveNotes()">💾 SAVE NOTES</button>
+        <button onclick="clearNotes()">🗑 CLEAR</button>
+    </div>
+
+    <div class="output" id="noteStatus">
+        Notes are saved locally on this device.
+    </div>
+
+</section>
+
+
+<!-- PASSWORD -->
+
+<section class="tool" id="password">
+
+    <h2>🔐 Password Generator</h2>
+
+    <label>Password length</label>
+
+    <input
+        id="passLength"
+        type="number"
+        min="6"
+        max="64"
+        value="16"
+    >
+
+    <div class="output" id="passwordOutput">
+        Click generate
+    </div>
+
+    <div class="row">
+        <button onclick="generatePassword()">
+            GENERATE
+        </button>
+
+        <button onclick="copyPassword()">
+            📋 COPY
+        </button>
+    </div>
+
+</section>
+
+
+<!-- TEXT TOOLS -->
+
+<section class="tool" id="text">
+
+    <h2>🔤 Text Tools</h2>
+
+    <textarea
+        id="textInput"
+        oninput="analyzeText()"
+        placeholder="Type or paste text here..."
+    ></textarea>
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong id="wordCount">0</strong>
+            Words
+        </div>
+
+        <div class="stat">
+            <strong id="charCount">0</strong>
+            Characters
+        </div>
+
+        <div class="stat">
+            <strong id="lineCount">0</strong>
+            Lines
+        </div>
+
+    </div>
+
+    <div class="row">
+        <button onclick="upperText()">UPPERCASE</button>
+        <button onclick="lowerText()">lowercase</button>
+        <button onclick="copyText()">COPY</button>
+    </div>
+
+</section>
+
+
+<!-- COLORS -->
+
+<section class="tool" id="color">
+
+    <h2>🎨 Color Generator</h2>
+
+    <div
+        class="color-box"
+        id="colorBox">
+    </div>
+
+    <div class="output" id="colorOutput">
+        #00FF88
+    </div>
+
+    <div class="row">
+        <button onclick="generateColor()">
+            🎲 RANDOM COLOR
+        </button>
+
+        <button onclick="copyColor()">
+            📋 COPY
+        </button>
+    </div>
+
+</section>
+
+
+<!-- TIMER -->
+
+<section class="tool" id="timer">
+
+    <h2>⏱ Countdown Timer</h2>
+
+    <div class="timer" id="timerDisplay">
+        05:00
+    </div>
+
+    <input
+        id="minutesInput"
+        type="number"
+        min="1"
+        value="5"
+        placeholder="Minutes"
+    >
+
+    <div class="row">
+        <button onclick="startTimer()">START</button>
+        <button onclick="pauseTimer()">PAUSE</button>
+        <button onclick="resetTimer()">RESET</button>
+    </div>
+
+</section>
+
+
 <footer>
-    X-MATRIX • Experimental Digital Lab
+    X-MATRIX • Your Personal Digital Toolbox
 </footer>
 
 </div>
+
 
 <script>
 
@@ -272,16 +525,14 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-const characters =
-    "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@";
-
-let fontSize = 15;
+const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@";
+const fontSize = 15;
 let columns = Math.floor(window.innerWidth / fontSize);
 let drops = Array(columns).fill(1);
 
-function drawMatrix() {
+function matrix() {
 
-    ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+    ctx.fillStyle = "rgba(0,0,0,.08)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = "#00ff88";
@@ -290,7 +541,7 @@ function drawMatrix() {
     for (let i = 0; i < drops.length; i++) {
 
         const char =
-            characters[Math.floor(Math.random() * characters.length)];
+            chars[Math.floor(Math.random() * chars.length)];
 
         ctx.fillText(
             char,
@@ -300,7 +551,7 @@ function drawMatrix() {
 
         if (
             drops[i] * fontSize > canvas.height &&
-            Math.random() > 0.975
+            Math.random() > .975
         ) {
             drops[i] = 0;
         }
@@ -309,7 +560,7 @@ function drawMatrix() {
     }
 }
 
-setInterval(drawMatrix, 40);
+setInterval(matrix, 40);
 
 
 /* =========================
@@ -318,10 +569,8 @@ setInterval(drawMatrix, 40);
 
 function updateClock() {
 
-    const now = new Date();
-
     document.getElementById("clock").textContent =
-        now.toLocaleTimeString();
+        new Date().toLocaleTimeString();
 
 }
 
@@ -330,148 +579,353 @@ updateClock();
 
 
 /* =========================
-   PASSWORD GENERATOR
+   TOOL SWITCHER
 ========================= */
 
+function showTool(id, button) {
+
+    document.querySelectorAll(".tool")
+        .forEach(tool => tool.classList.remove("active"));
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+    button.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================
+   CALCULATOR
+========================= */
+
+let calc = "";
+
+function calcInput(value) {
+
+    if (calc === "Error") {
+        calc = "";
+    }
+
+    calc += value;
+
+    document.getElementById("calcDisplay").value =
+        calc || "0";
+}
+
+function clearCalc() {
+
+    calc = "";
+
+    document.getElementById("calcDisplay").value =
+        "0";
+}
+
+function backspace() {
+
+    calc = calc.slice(0, -1);
+
+    document.getElementById("calcDisplay").value =
+        calc || "0";
+}
+
+function calculate() {
+
+    try {
+
+        if (!/^[0-9+\-*/%.() ]+$/.test(calc)) {
+            throw new Error();
+        }
+
+        let expression =
+            calc.replace(/%/g, "/100");
+
+        let result =
+            Function('"use strict"; return (' +
+            expression + ')')();
+
+        if (!Number.isFinite(result)) {
+            throw new Error();
+        }
+
+        calc = String(result);
+
+        document.getElementById("calcDisplay").value =
+            calc;
+
+    } catch {
+
+        calc = "Error";
+
+        document.getElementById("calcDisplay").value =
+            "Error";
+    }
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+const notesArea =
+    document.getElementById("notesArea");
+
+notesArea.value =
+    localStorage.getItem("xmatrix_notes") || "";
+
+function saveNotes() {
+
+    localStorage.setItem(
+        "xmatrix_notes",
+        notesArea.value
+    );
+
+    document.getElementById("noteStatus").textContent =
+        "✅ Notes saved successfully.";
+
+}
+
+function clearNotes() {
+
+    if (!confirm("Clear your notes?")) return;
+
+    notesArea.value = "";
+
+    localStorage.removeItem("xmatrix_notes");
+
+    document.getElementById("noteStatus").textContent =
+        "Notes cleared.";
+}
+
+
+/* =========================
+   PASSWORD
+========================= */
+
+let generatedPassword = "";
+
 function generatePassword() {
+
+    let length =
+        parseInt(
+            document.getElementById("passLength").value
+        );
+
+    if (length < 6) length = 6;
+    if (length > 64) length = 64;
 
     const chars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
         "abcdefghijklmnopqrstuvwxyz" +
-        "0123456789" +
-        "!@#$%^&*()_+-=[]{}";
+        "0123456789!@#$%^&*()_+-=[]{}";
 
-    let password = "";
+    generatedPassword = "";
 
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < length; i++) {
 
-        password +=
-            chars[Math.floor(Math.random() * chars.length)];
+        generatedPassword +=
+            chars[Math.floor(
+                Math.random() * chars.length
+            )];
 
     }
 
-    document.getElementById("password").textContent =
-        password;
+    document.getElementById("passwordOutput")
+        .textContent = generatedPassword;
+}
+
+function copyPassword() {
+
+    if (!generatedPassword) return;
+
+    navigator.clipboard.writeText(
+        generatedPassword
+    );
+
+    document.getElementById("passwordOutput")
+        .textContent = "✅ Password copied!";
 }
 
 
 /* =========================
-   RANDOM NUMBER
+   TEXT TOOLS
 ========================= */
 
-function randomNumber() {
+function analyzeText() {
 
-    const number =
-        Math.floor(Math.random() * 1000000);
+    const text =
+        document.getElementById("textInput").value;
 
-    document.getElementById("number").textContent =
-        number.toLocaleString();
+    const words =
+        text.trim()
+            ? text.trim().split(/\s+/).length
+            : 0;
 
+    const lines =
+        text
+            ? text.split("\n").length
+            : 0;
+
+    document.getElementById("wordCount")
+        .textContent = words;
+
+    document.getElementById("charCount")
+        .textContent = text.length;
+
+    document.getElementById("lineCount")
+        .textContent = lines;
+}
+
+function upperText() {
+
+    const input =
+        document.getElementById("textInput");
+
+    input.value =
+        input.value.toUpperCase();
+
+    analyzeText();
+}
+
+function lowerText() {
+
+    const input =
+        document.getElementById("textInput");
+
+    input.value =
+        input.value.toLowerCase();
+
+    analyzeText();
+}
+
+function copyText() {
+
+    const text =
+        document.getElementById("textInput").value;
+
+    navigator.clipboard.writeText(text);
 }
 
 
 /* =========================
-   RANDOM COLOR
+   COLORS
 ========================= */
 
-function randomColor() {
+let currentColor = "#00FF88";
 
-    const letters = "0123456789ABCDEF";
+function generateColor() {
 
-    let color = "#";
+    const letters =
+        "0123456789ABCDEF";
+
+    currentColor = "#";
 
     for (let i = 0; i < 6; i++) {
 
-        color +=
-            letters[Math.floor(Math.random() * 16)];
-
+        currentColor +=
+            letters[
+                Math.floor(
+                    Math.random() * 16
+                )
+            ];
     }
 
-    document.getElementById("color").textContent =
-        color;
+    document.getElementById("colorBox")
+        .style.background = currentColor;
 
-    document.getElementById("color").style.color =
-        color;
+    document.getElementById("colorOutput")
+        .textContent = currentColor;
+}
 
+function copyColor() {
+
+    navigator.clipboard.writeText(currentColor);
+
+    document.getElementById("colorOutput")
+        .textContent = "✅ Color copied!";
 }
 
 
 /* =========================
-   REACTION GAME
+   TIMER
 ========================= */
 
-let reactionState = "idle";
-let reactionStart = 0;
-let reactionTimer;
+let timerSeconds = 300;
+let timerInterval = null;
 
-function startReaction() {
+function updateTimerDisplay() {
 
-    const box =
-        document.getElementById("reaction");
+    const minutes =
+        Math.floor(timerSeconds / 60);
 
-    clearTimeout(reactionTimer);
+    const seconds =
+        timerSeconds % 60;
 
-    reactionState = "waiting";
-
-    box.className = "reaction";
-    box.textContent = "WAIT...";
-
-    const delay =
-        1500 + Math.random() * 4000;
-
-    reactionTimer = setTimeout(() => {
-
-        reactionState = "go";
-        reactionStart = performance.now();
-
-        box.className = "reaction go";
-        box.textContent = "CLICK NOW!";
-
-    }, delay);
+    document.getElementById("timerDisplay")
+        .textContent =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
 }
 
-function reactionClick() {
+function startTimer() {
 
-    const box =
-        document.getElementById("reaction");
+    if (timerInterval) return;
 
-    if (reactionState === "idle") {
+    if (timerSeconds <= 0) {
 
-        box.textContent =
-            "Press START first.";
-
-        return;
+        timerSeconds =
+            parseInt(
+                document.getElementById("minutesInput").value
+            ) * 60;
     }
 
-    if (reactionState === "waiting") {
+    timerInterval =
+        setInterval(() => {
 
-        clearTimeout(reactionTimer);
+            if (timerSeconds <= 0) {
 
-        reactionState = "idle";
+                clearInterval(timerInterval);
+                timerInterval = null;
 
-        box.className = "reaction";
-        box.textContent =
-            "TOO EARLY!";
+                alert("⏰ Time is up!");
 
-        return;
-    }
+                return;
+            }
 
-    if (reactionState === "go") {
+            timerSeconds--;
+            updateTimerDisplay();
 
-        const time =
-            Math.round(
-                performance.now() - reactionStart
-            );
-
-        reactionState = "idle";
-
-        box.className = "reaction ready";
-
-        box.textContent =
-            time + " ms";
-
-    }
+        }, 1000);
 }
+
+function pauseTimer() {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
+function resetTimer() {
+
+    pauseTimer();
+
+    timerSeconds =
+        parseInt(
+            document.getElementById("minutesInput").value
+        ) * 60;
+
+    updateTimerDisplay();
+}
+
+updateTimerDisplay();
+generateColor();
 
 </script>
 
